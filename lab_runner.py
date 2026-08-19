@@ -285,7 +285,7 @@ def _answer_for(row: pd.Series, graph: bool) -> str:
     return answer
 
 
-def run_lab() -> dict[str, pd.DataFrame | dict]:
+def run_lab(write_outputs: bool = True) -> dict[str, pd.DataFrame | dict]:
     news, chunks = load_fixture()
     coref = conservative_coref(chunks)
     triples = extract_fixture_triples(chunks)
@@ -348,14 +348,15 @@ def run_lab() -> dict[str, pd.DataFrame | dict]:
             })
     summary_df = pd.DataFrame(summary_rows)
 
-    output_dir = ROOT / "outputs"
-    output_dir.mkdir(exist_ok=True)
-    eval_df.to_csv(output_dir / "graphrag_eval_results.csv", index=False)
-    summary_df.to_csv(output_dir / "graphrag_vs_flatrag_summary.csv", index=False)
-    chunks.to_csv(ROOT / "data" / "hackernoon_subset.csv", index=False)
-    detailed.to_csv(ROOT / "data" / "golden_dataset.csv", index=False)
-    audit.to_csv(output_dir / "entity_resolution_audit.csv", index=False)
-    top_degree.to_csv(output_dir / "top_degree_entities.csv", index=False)
+    if write_outputs:
+        output_dir = ROOT / "outputs"
+        output_dir.mkdir(exist_ok=True)
+        eval_df.to_csv(output_dir / "graphrag_eval_results.csv", index=False)
+        summary_df.to_csv(output_dir / "graphrag_vs_flatrag_summary.csv", index=False)
+        chunks.to_csv(ROOT / "data" / "hackernoon_subset.csv", index=False)
+        detailed.to_csv(ROOT / "data" / "golden_dataset.csv", index=False)
+        audit.to_csv(output_dir / "entity_resolution_audit.csv", index=False)
+        top_degree.to_csv(output_dir / "top_degree_entities.csv", index=False)
 
     policy = test_supernode_policy()
     return {

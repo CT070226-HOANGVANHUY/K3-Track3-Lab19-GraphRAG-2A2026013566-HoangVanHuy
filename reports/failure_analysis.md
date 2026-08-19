@@ -8,7 +8,7 @@
 
 **Root cause:** semantic top-k tối ưu độ tương đồng của từng chunk, không có cơ chế nối entity giữa các report và không biết rằng cùng một transaction đã đổi trạng thái theo thời gian.
 
-**GraphRAG mitigation:** seed `Aeris`, `Ericsson`, `IoT Accelerator`, `Connected Vehicle Cloud`; BFS nối các node, sau đó linearize edge với `source_chunk_id`, date và evidence. Hybrid context vẫn giữ vector chunks để bổ sung số liệu.
+**GraphRAG mitigation:** khi ingest đủ corpus, seed `Aeris`, `Ericsson`, `IoT Accelerator`, `Connected Vehicle Cloud`; BFS nối các node, sau đó linearize edge với `source_chunk_id`, date và evidence. Trong actual live run hiện tại, mitigation chưa phát huy vì graph chỉ có phạm vi 1.000 dòng còn câu hỏi dùng evidence trong 5.000 dòng.
 
 ## Case B — GraphRAG khó với temporal state
 

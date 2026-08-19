@@ -36,21 +36,21 @@ Notebook giữ Cypher `UNWIND $rows AS row`, batch 1.000 records, constraint uni
 
 ## 6. Flat RAG vs GraphRAG
 
-Kết quả export trong `outputs/graphrag_vs_flatrag_summary.csv` cho thấy GraphRAG tốt hơn trên coverage và chained reasoning, còn Flat RAG nhẹ hơn:
+Actual LLM Judge bằng Xah đã chấm đủ 50 câu Golden trên context live:
 
-| Group | Metric | Flat | Graph | Delta |
-|---|---|---:|---:|---:|
-| multi-hop | Comprehensiveness | 2.0 | 5.0 | +3.0 |
-| multi-hop | Faithfulness | 2.0 | 5.0 | +3.0 |
-| multi-hop | Multi-hop | 2.0 | 5.0 | +3.0 |
-| cross-doc | Comprehensiveness | 3.0 | 5.0 | +2.0 |
-| factoid | Comprehensiveness | 4.0 | 5.0 | +1.0 |
+| Metric | Flat RAG | GraphRAG | Delta |
+|---|---:|---:|---:|
+| Comprehensiveness | 1.620 | 1.260 | -0.360 |
+| Faithfulness | 2.380 | 2.260 | -0.120 |
+| Multi-hop reasoning | 1.740 | 1.300 | -0.440 |
+| Latency (s) | 1.198 | 1.109 | -0.089 |
+| Token usage | 697.080 | 695.380 | -1.700 |
 
-Latency local fixture là 0.018s Flat và 0.031s Graph; token usage trung bình cũng cao hơn ở Graph vì thêm graph context. Đây là benchmark deterministic fallback, không phải số đo API production.
+GraphRAG thấp hơn trong lần chạy live này vì graph chỉ được dựng từ 1.000 dòng, còn Golden Dataset ghi rõ evidence thuộc phạm vi 5.000 dòng. Đây là mismatch về corpus coverage, không phải bằng chứng GraphRAG luôn kém. Khi mở rộng ingestion/extraction tới đúng phạm vi Golden, cần chạy lại benchmark để đo lợi thế multi-hop công bằng.
 
 ## 7. Ca lỗi Flat RAG
 
-Với G5000-01, các thông tin “IoT Accelerator/Connected Vehicle Cloud” và “100 million devices/9,000 enterprises/190 countries” nằm ở các report khác nhau. Top-k Flat RAG có thể lấy report nêu tài sản nhưng thiếu số liệu reach. GraphRAG nối Aeris–Ericsson–technology và giữ provenance theo chunk/date, nên answer bao quát đủ hai phần.
+Với G5000-01, các thông tin “IoT Accelerator/Connected Vehicle Cloud” và “100 million devices/9,000 enterprises/190 countries” nằm ngoài phạm vi graph live 1.000 dòng. Flat RAG vẫn có thể lấy được một phần nhờ vector similarity; GraphRAG không có đủ seed/evidence trong Neo4j nên actual Judge chấm thấp. Root cause là corpus coverage mismatch; mitigation là ingest đúng 5.000 dòng hoặc đánh dấu câu hỏi ngoài phạm vi.
 
 ## 8. Ca lỗi GraphRAG
 
@@ -62,4 +62,4 @@ Flat RAG có indexing đơn giản, latency/token thấp nhưng thiếu đườn
 
 ## 10. Kiểm soát AI Coding Agent
 
-Quyết định từ chối là chạy pairwise similarity toàn bộ entity mentions (`O(N²)`) và gửi toàn bộ 350MB qua LLM. Cả hai đều tạo nguy cơ OOM/rate-limit. Thay vào đó dùng ANN top-k, lexical guard, batch extraction, scale guard và checkpoint CSV. Runner local cũng không giả mạo live Neo4j/LLM: nó tạo fixture reproducible để kiểm thử contract, còn production path vẫn yêu cầu secrets hợp lệ.
+Quyết định từ chối là chạy pairwise similarity toàn bộ entity mentions (`O(N²)`) và gửi toàn bộ 350MB qua LLM. Cả hai đều tạo nguy cơ OOM/rate-limit. Thay vào đó dùng ANN top-k, lexical guard, batch extraction, scale guard và checkpoint CSV. Actual evaluator `run_live_evaluation.py` dùng Xah cho generation và Judge; runner local vẫn được giữ riêng để kiểm thử contract reproducible.

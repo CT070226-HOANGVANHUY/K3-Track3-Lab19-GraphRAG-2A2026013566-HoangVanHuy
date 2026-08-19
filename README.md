@@ -123,6 +123,14 @@ py -3.11 -m venv .venv
 
 `lab_runner.py` dùng golden fixture có sẵn để kiểm thử reproducible preprocessing, triple extraction, entity audit, provenance, super-node policy và benchmark; kết quả được xuất vào `outputs/`. Khi có credentials thật, điền `.env` theo `.env.example` rồi chạy notebook để chuyển sang HF/LLM/Neo4j production path.
 
+Để chạy actual generation + LLM-as-a-Judge trên đủ 50 câu Golden bằng Xah:
+
+```powershell
+.venv\Scripts\python.exe run_live_evaluation.py
+```
+
+Lệnh này dùng `hf_live_1000.csv`, gọi Xah thật cho Flat/Graph generation và Judge, sau đó ghi đè hai file benchmark trong `outputs/`.
+
 ---
 
 ## ⏳ Timeline (120 phút + 30 phút Thuyết minh)

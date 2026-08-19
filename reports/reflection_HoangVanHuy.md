@@ -13,7 +13,7 @@
 
 ## 2. Debugging và bài học
 
-Lỗi khó nhất là pipeline ban đầu phụ thuộc đồng thời vào HF token, LLM key và Neo4j, đồng thời schema live dùng `description` thay vì `text`. Mình bổ sung mapping schema, giới hạn live ở 1.000 dòng, tách runner deterministic dùng golden fixture, giữ production functions trong notebook và kiểm tra provenance trước khi kết luận. Cách này giúp phân biệt rõ kết quả live ingestion với benchmark fixture, đồng thời phát hiện sớm audit rỗng và super-node cap sai.
+Lỗi khó nhất là pipeline ban đầu phụ thuộc đồng thời vào HF token, LLM key và Neo4j, đồng thời schema live dùng `description` thay vì `text`. Mình bổ sung mapping schema, giới hạn live ở 1.000 dòng, tách runner deterministic dùng golden fixture, viết `run_live_evaluation.py` để gọi Xah thật cho generation/Judge và kiểm tra provenance trước khi kết luận. Actual Judge cũng phát hiện mismatch quan trọng: Golden evidence thuộc 5.000 dòng nhưng graph live mới ingest 1.000 dòng.
 
 ## 3. Action plan đồ án
 
@@ -35,5 +35,5 @@ Lỗi khó nhất là pipeline ban đầu phụ thuộc đồng thời vào HF t
 |---|---:|---|
 | Hiểu GraphRAG | 4/5 | Nắm rõ graph giúp nối multi-hop và provenance. |
 | Kiểm soát AI Agent | 4/5 | Tách fixture/reality, từ chối O(N²) và full-corpus LLM. |
-| Chất lượng graph | 4/5 | Live Neo4j đã kiểm tra: 8 edge, provenance đầy đủ; fixture có audit và super-node test reproducible. |
+| Chất lượng graph | 4/5 | Live Neo4j có 8 edge, provenance đầy đủ; cần mở rộng corpus để bao phủ toàn bộ Golden evidence. |
 | Debug và phân tích | 4/5 | Có audit, policy test và failure analysis. |
