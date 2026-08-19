@@ -25,6 +25,10 @@ golden_dataset.csv
 *.parquet
 *.pq
 
+# Generated large-run data and benchmark artifacts
+data/hf_live_5000.csv
+outputs/*_5000.csv
+
 # OS files
 .DS_Store
 Thumbs.db

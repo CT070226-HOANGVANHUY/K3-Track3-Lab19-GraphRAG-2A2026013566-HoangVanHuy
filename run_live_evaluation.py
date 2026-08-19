@@ -14,6 +14,7 @@ import json
 
 import nbformat
 import pandas as pd
+from IPython.display import display
 
 
 ROOT = Path(__file__).resolve().parent
@@ -24,7 +25,11 @@ GOLDEN_DATA = ROOT / "data" / "golden_dataset.csv"
 
 def load_notebook_namespace() -> dict:
     notebook = nbformat.read(NOTEBOOK, as_version=4)
-    namespace = {"__name__": "live_evaluation", "__file__": str(NOTEBOOK)}
+    namespace = {
+        "__name__": "live_evaluation",
+        "__file__": str(NOTEBOOK),
+        "display": display,
+    }
     for cell in notebook.cells:
         if cell.get("cell_type") != "code":
             continue

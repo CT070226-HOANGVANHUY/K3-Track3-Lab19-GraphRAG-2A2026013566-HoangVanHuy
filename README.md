@@ -131,6 +131,20 @@ py -3.11 -m venv .venv
 
 Lệnh này dùng `hf_live_1000.csv`, gọi Xah thật cho Flat/Graph generation và Judge, sau đó ghi đè hai file benchmark trong `outputs/`.
 
+Để chạy corpus 5.000 dòng và đánh giá đủ 50 câu bằng Xah:
+
+```powershell
+.venv\Scripts\python.exe run_full_5000_evaluation.py
+```
+
+Lệnh này tải `data/hf_live_5000.csv`, dùng toàn bộ corpus sau dedup cho FlatRAG, trích xuất graph tối đa `EXTRACTION_MAX_CHUNKS=400` để kiểm soát chi phí, nạp Neo4j và ghi kết quả vào các file `*_5000.csv`. Nếu bước đánh giá bị gián đoạn sau khi graph đã nạp, tiếp tục bằng:
+
+```powershell
+.venv\Scripts\python.exe run_full_5000_evaluation.py --eval-only
+```
+
+Extraction toàn bộ corpus cần tăng `EXTRACTION_MAX_CHUNKS` và sẽ làm tăng đáng kể số lần gọi LLM.
+
 ---
 
 ## ⏳ Timeline (120 phút + 30 phút Thuyết minh)
