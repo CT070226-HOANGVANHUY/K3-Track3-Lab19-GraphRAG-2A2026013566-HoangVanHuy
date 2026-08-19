@@ -67,8 +67,14 @@ NEO4J_DATABASE=neo4j
 GROQ_API_KEY=gsk_...
 GROQ_MODEL=llama-3.3-70b-versatile
 
-JUDGE_PROVIDER=openai               # 'openai' hoặc 'groq'
-JUDGE_MODEL=gpt-4o-mini             # hoặc llama-3.3-70b-versatile
+# Provider OpenAI-compatible theo mẫu trong ảnh
+LLM_PROVIDER=xah
+XAH_API_KEY=sk-...
+XAH_BASE_URL=https://api.xah.io/v1
+XAH_MODEL=mainnewnol/gpt-5.6-luna
+
+JUDGE_PROVIDER=xah                 # 'xah', 'openai' hoặc 'groq'
+JUDGE_MODEL=mainnewnol/gpt-5.6-luna
 OPENAI_API_KEY=sk-...
 
 HF_TOKEN=hf_...                     # Hugging Face User Access Token
@@ -76,6 +82,10 @@ HF_TOKEN=hf_...                     # Hugging Face User Access Token
 
 > [!WARNING]
 > **Tuyệt đối không hard-code API Key hoặc mật khẩu Neo4j** vào notebook khi nộp bài.
+
+Provider Xah dùng API chuẩn tương thích OpenAI: base URL là `https://api.xah.io/v1`,
+route chat là `/chat/completions`, và model mặc định là `mainnewnol/gpt-5.6-luna`.
+Notebook sẽ đọc key từ `XAH_API_KEY` (hoặc alias `XAI_API_KEY`), không ghi key vào mã nguồn.
 
 ---
 
@@ -100,6 +110,18 @@ cp .env.example .env
 # 4. Khởi chạy Jupyter Lab / Notebook
 jupyter lab Day19_GraphRAG_vs_FlatRAG_Production_Lab_Guide.ipynb
 ```
+
+### Chạy local không cần credentials
+
+PowerShell trên Windows:
+
+```powershell
+py -3.11 -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe lab_runner.py
+```
+
+`lab_runner.py` dùng golden fixture có sẵn để kiểm thử reproducible preprocessing, triple extraction, entity audit, provenance, super-node policy và benchmark; kết quả được xuất vào `outputs/`. Khi có credentials thật, điền `.env` theo `.env.example` rồi chạy notebook để chuyển sang HF/LLM/Neo4j production path.
 
 ---
 

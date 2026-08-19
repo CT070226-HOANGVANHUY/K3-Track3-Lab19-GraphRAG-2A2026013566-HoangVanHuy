@@ -1,0 +1,16 @@
+Loại câu hỏi,Metric,Flat RAG,GraphRAG,Delta (Graph - Flat),Nhận xét phân tích
+cross-doc,Comprehensiveness,3.0,5.0,2.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+cross-doc,Faithfulness,3.0,5.0,2.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+cross-doc,Multi-hop reasoning,3.0,4.0,1.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+cross-doc,Latency (s),0.018,0.031,0.013,Flat RAG có chi phí runtime thấp hơn trong fixture.
+cross-doc,Token usage,84.364,120.0,35.636,Flat RAG có chi phí runtime thấp hơn trong fixture.
+factoid,Comprehensiveness,4.0,5.0,1.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+factoid,Faithfulness,4.0,5.0,1.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+factoid,Multi-hop reasoning,3.0,4.0,1.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+factoid,Latency (s),0.018,0.031,0.013,Flat RAG có chi phí runtime thấp hơn trong fixture.
+factoid,Token usage,80.0,120.0,40.0,Flat RAG có chi phí runtime thấp hơn trong fixture.
+multi-hop,Comprehensiveness,2.0,5.0,3.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+multi-hop,Faithfulness,2.0,5.0,3.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+multi-hop,Multi-hop reasoning,2.0,5.0,3.0,GraphRAG cải thiện coverage/chain reasoning; Flat RAG nhẹ hơn về latency/token.
+multi-hop,Latency (s),0.018,0.031,0.013,Flat RAG có chi phí runtime thấp hơn trong fixture.
+multi-hop,Token usage,80.348,120.609,40.261,Flat RAG có chi phí runtime thấp hơn trong fixture.

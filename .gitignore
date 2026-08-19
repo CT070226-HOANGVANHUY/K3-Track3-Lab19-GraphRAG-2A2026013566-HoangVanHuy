@@ -19,6 +19,7 @@ env/
 
 # Large Datasets and data dumps (do not commit 300MB data dumps)
 golden_dataset.csv
+!data/golden_dataset.csv
 !reports/*.csv
 *.jsonl
 *.parquet

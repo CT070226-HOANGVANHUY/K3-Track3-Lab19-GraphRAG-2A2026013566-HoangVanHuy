@@ -1,0 +1,12 @@
+type,left,right,similarity,decision
+Company,Aeris,Ericsson,0.6154,REJECT_GUARD
+Company,Ericsson,ServiceNow,0.5556,REJECT_GUARD
+Person,Sam Altman,Steve Altman,0.91,REJECT_GUARD
+Technology,Apple Watch,Apple,0.88,REJECT_GUARD
+Company,Microsoft Corp,Microsoft,0.99,MERGE_MANUAL
+Company,Aeris Communications,Aeris,1.0,MERGE_MANUAL
+Company,ServiceNow Inc,ServiceNow,0.99,MERGE_MANUAL
+Company,NVIDIA Corporation,NVIDIA,0.98,MERGE_MANUAL
+Technology,Now Assist,Now Assist for Virtual Agent,0.94,MERGE_MANUAL
+Company,Apple Music,Apple,0.87,REJECT_GUARD
+Company,Service Now,ServiceNow,0.93,MERGE_VECTOR
